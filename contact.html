@@ -22,14 +22,24 @@
         <section>
             <h2>Get in Touch</h2>
             <p>If you have any questions, feedback, or need support, please reach out to us at support@storyshield.com.</p>
+            
+            <form id="contact-form">
+                <label for="name">Name:</label><br>
+                <input type="text" id="name" name="name" required><br><br>
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" required><br><br>
+                <label for="message">Message:</label><br>
+                <textarea id="message" name="message" rows="4" required></textarea><br><br>
+                <button type="submit">Submit</button>
+            </form>
         </section>
     </main>
     <footer>
         <p>&copy; 2024 StoryShield. All rights reserved.</p>
     </footer>
     <script>
-        document.querySelector('form').addEventListener('submit', function(event) {
-            var email = document.querySelector('input[type="email"]').value;
+        document.getElementById('contact-form').addEventListener('submit', function(event) {
+            var email = document.getElementById('email').value;
             if (!email.includes('@')) {
                 event.preventDefault();
                 alert('Please enter a valid email address.');
