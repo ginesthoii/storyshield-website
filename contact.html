@@ -27,5 +27,14 @@
     <footer>
         <p>&copy; 2024 StoryShield. All rights reserved.</p>
     </footer>
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+            var email = document.querySelector('input[type="email"]').value;
+            if (!email.includes('@')) {
+                event.preventDefault();
+                alert('Please enter a valid email address.');
+            }
+        });
+    </script>
 </body>
 </html>
