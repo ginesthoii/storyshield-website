@@ -21,9 +21,28 @@
                 discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
                 scope: "https://www.googleapis.com/auth/spreadsheets.readonly"
             }).then(function () {
-                gapi.auth2.getAuthInstance().signIn();
-                loadSheetData();
+                gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+                updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+            }, function(error) {
+                console.error("Error initializing Google API client: ", error);
             });
+        }
+
+        function updateSigninStatus(isSignedIn) {
+            if (isSignedIn) {
+                document.getElementById('signin-button').style.display = 'none';
+                loadSheetData();
+            } else {
+                document.getElementById('signin-button').style.display = 'block';
+            }
+        }
+
+        function handleSignInClick() {
+            gapi.auth2.getAuthInstance().signIn();
+        }
+
+        function handleSignOutClick() {
+            gapi.auth2.getAuthInstance().signOut();
         }
 
         function loadSheetData() {
@@ -50,6 +69,7 @@
                 }
             }, function(response) {
                 console.error('Error: ' + response.result.error.message);
+                alert('Failed to load data. Please try again later.');
             });
         }
     </script>
@@ -76,11 +96,15 @@
                 <li>Insightful analytics</li>
                 <li>Advanced security tips</li>
             </ul>
+            <button id="signin-button" onclick="handleSignInClick()">Sign In</button>
+            <button id="signout-button" onclick="handleSignOutClick()" style="display:none;">Sign Out</button>
         </section>
     </main>
     <footer>
         <p>&copy; 2024 StoryShield. All rights reserved.</p>
     </footer>
-    <button onclick="handleClientLoad()">Sign In</button>
+    <script>
+        handleClientLoad();
+    </script>
 </body>
 </html>
