@@ -31,9 +31,11 @@
         function updateSigninStatus(isSignedIn) {
             if (isSignedIn) {
                 document.getElementById('signin-button').style.display = 'none';
+                document.getElementById('signout-button').style.display = 'block';
                 loadSheetData();
             } else {
                 document.getElementById('signin-button').style.display = 'block';
+                document.getElementById('signout-button').style.display = 'none';
             }
         }
 
